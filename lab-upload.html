@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Work Upload - Mick Jerryme Mhier M. Varona</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/styles.css">
+</head>
+<body>
+<nav>
+  <h3>Mick Jerryme Mhier M. Varona</h3>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="quiz-upload.html">Quiz Upload</a>
+    <a href="lab-upload.html">Lab Upload</a>
+    <a href="major-exam-upload.html">Major Exam Upload</a>
+  </div>
+</nav>
+
+<section>
+  <h2>Lab Work Upload</h2>
+  <form id="labForm">
+    <input type="text" name="title" placeholder="Title / Description" required>
+    
+    <label>Lab File:</label>
+    <input type="file" name="labFile" accept=".pdf,.doc,.docx,.zip">
+    
+    <label>Proof Image (Required):</label>
+    <div class="drop-zone proof-drop-zone">
+      <p>Drag & drop image here or click to browse</p>
+      <input type="file" accept="image/*" style="display:none;" onchange="handleImageUpload(event, this.parentElement)">
+    </div>
+    <div id="labError" class="error"></div>
+    
+    <button type="button" onclick="handleSubmit('labForm')">Submit Lab Work</button>
+  </form>
+</section>
+
+<div id="viewer">
+<span class="close" onclick="closeViewer()">&times;</span>
+<img id="viewerImg">
+</div>
+
+<script src="shared/script.js"></script>
+<script>
+function handleImageUpload(event, zone) {
+  const file = event.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      zone.innerHTML = '';
+      zone.appendChild(img);
+      img.style.cursor = 'pointer';
+      img.onclick = function() { openViewer(ev.target.result); };
+    };
+    reader.readAsDataURL(file);
+  }
+}
+</script>
+</body>
+</html>
+
